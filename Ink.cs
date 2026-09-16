@@ -91,7 +91,7 @@ public sealed class Spinner : IDisposable
             _ => Frames
         };
 
-        Console.CursorVisible = false;
+        try { Console.CursorVisible = false; } catch { }
         thread = new Thread(Run) { IsBackground = true };
         thread.Start();
     }
@@ -114,7 +114,7 @@ public sealed class Spinner : IDisposable
         running = false;
         thread.Join();
         Console.Write($"\r  {T.Rgb("✓", 80, 220, 120)}  {message ?? currentLabel}   \n");
-        Console.CursorVisible = true;
+        try { Console.CursorVisible = true; } catch { }
     }
 
     public void Fail(string? message = null)
@@ -122,7 +122,7 @@ public sealed class Spinner : IDisposable
         running = false;
         thread.Join();
         Console.Write($"\r  {T.Rgb("✗", 255, 80, 80)}  {message ?? currentLabel}   \n");
-        Console.CursorVisible = true;
+        try { Console.CursorVisible = true; } catch { }
     }
 
     public void Dispose() => Done();
@@ -140,7 +140,7 @@ public sealed class ProgressBar : IDisposable
     {
         this.label = label;
         this.width = width;
-        Console.CursorVisible = false;
+        try { Console.CursorVisible = false; } catch { }
         Render();
     }
 
@@ -165,7 +165,7 @@ public sealed class ProgressBar : IDisposable
     {
         Set(1);
         Console.WriteLine();
-        Console.CursorVisible = true;
+        try { Console.CursorVisible = true; } catch { }
     }
 
     public void Dispose() => Done();
